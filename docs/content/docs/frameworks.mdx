@@ -69,7 +69,7 @@ export { Simulation };
   When using Next.js make sure to include `'use client';` at the top of the file
 </Callout>
 
-## Vue
+## Vue 2
 
 ```vue title="Simulation.vue"
 <template>
@@ -91,6 +91,31 @@ const Simulation = {
 };
 
 export { Simulation };
+</script>
+```
+
+## Vue 3
+
+```vue
+<template>
+  <div ref="container" style="width: 100vw; height: 100vh"></div>
+</template>
+
+<script setup>
+import { onMounted, onBeforeUnmount, ref } from 'vue';
+import WebGLFluidEnhanced from 'webgl-fluid-enhanced';
+
+const container = ref(null);
+let simulation = null;
+
+onMounted(() => {
+  simulation = new WebGLFluidEnhanced(container.value);
+  simulation.start();
+});
+
+onBeforeUnmount(() => {
+  if (simulation) simulation.stop();
+});
 </script>
 ```
 
